@@ -1,1 +1,46 @@
-<h1>Hello GitHub</h1>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>我的個人首頁</title>
+    <link rel="stylesheet" href="style.css">
+
+<!-- 引入 jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>你好！</h1>
+        <p>這是我的 GitHub Personal Page。</p>
+        <button id="loadDataBtn">載入遠端資料 (Ajax)</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#loadDataBtn').click(function() {
+                // 使用 jQuery Ajax 讀取遠端 JSON 資料
+                $.ajax({
+                    url: 'https://jsonplaceholder.typicode.com/users/1',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        // 成功取得資料後，將 JSON 欄位渲染到畫面上
+                        let infoHtml = `
+                            <p style="margin-top: 15px; color: #555;">
+                                <strong>使用者名稱：</strong> ${response.name}<br>
+                                <strong>電子郵件：</strong> ${response.email}
+                            </p>
+                        `;
+                        $('#result').html(infoHtml);
+                    },
+                    error: function() {
+                        $('#result').html('<p style="color: red;">資料載入失敗！</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
